@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*;
 import softarex.gorbachev.springbootrestclassroom.model.User;
 import softarex.gorbachev.springbootrestclassroom.service.UserService;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,30 +17,32 @@ public class UserController {
         this.service = service;
     }
 
+    @CrossOrigin("http://localhost:3000")
     @GetMapping
     public List<User> getUsers() {
         System.out.println(UUID.randomUUID());
         return service.getUsers();
     }
 
+    @CrossOrigin("http://localhost:3000")
     @PostMapping // UserDTO - is слой between front and back => User => Mapper library
     public User createUser(@RequestBody User user) {
-/* Если Json будет
- пустым, тогда объект будет инициализирван по умлолчанию
-   А что если вообще не будет передоватья json*/
         return service.createUser(user);
     }
 
+    @CrossOrigin("http://localhost:3000")
     @DeleteMapping("/{userId}")
     public void removeUser(@PathVariable("userId") Integer /* Id  => UUID */ id) {
         service.deleteUser(id);
     }
 
+    @CrossOrigin("http://localhost:3000")
     @GetMapping("/{userId}")
     public User getUser(@PathVariable Integer userId) {
         return service.getUser(userId);
     }
 
+    @CrossOrigin("http://localhost:3000")
     @PutMapping
     public void updateUser(@RequestBody User user) {
         service.updateUser(user);

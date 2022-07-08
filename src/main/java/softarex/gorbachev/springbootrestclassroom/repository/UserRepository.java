@@ -27,7 +27,7 @@ public class UserRepository {
         listUsers.remove(find(userId));
     }
 
-    public User updateById(User userUpdate) {
+    public User update(User userUpdate) {
         User user = listUsers.get(find(userUpdate.getId()));
         user.setName(userUpdate.getName());
         user.setHand(userUpdate.isHand());

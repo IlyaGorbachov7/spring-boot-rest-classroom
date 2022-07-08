@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-        repository.updateById(user);
+        repository.update(user);
     }
 
     public User getUser(Integer userId) {
