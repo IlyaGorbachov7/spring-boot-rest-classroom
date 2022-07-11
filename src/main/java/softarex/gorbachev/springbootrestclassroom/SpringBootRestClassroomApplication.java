@@ -3,6 +3,7 @@ package softarex.gorbachev.springbootrestclassroom;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -14,13 +15,13 @@ public class SpringBootRestClassroomApplication {
     }
 
     @Bean
-    public LettuceConnectionFactory redisStandAloneConnectionFactory() {
+    public RedisConnectionFactory redisConnectionFactory() {
         return new LettuceConnectionFactory();
     }
 
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplateStandAlone(LettuceConnectionFactory redisConnectionFactory) {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;

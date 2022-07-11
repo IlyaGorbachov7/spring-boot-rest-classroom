@@ -19,6 +19,7 @@ public class UserService implements ServiceTemplate<User, UUID> {
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         repository.findAll().forEach(users::add);
+
         return users;
     }
 
@@ -43,12 +44,18 @@ public class UserService implements ServiceTemplate<User, UUID> {
         if (Objects.isNull(entity)) {
             throw new NullPointerException(""); // ?
         }
+        boolean exist = repository.existsByName(entity.getName());
+        if (exist) {
+            throw new UnsupportedOperationException("User with same name already exist");
+        }
+
+
         return repository.save(entity);
     }
 
     @Override
     public void update(User rscEntity) {
-        if (Objects.isNull(rscEntity)) {
+        if (Objects.isNull(rscEntity) || Objects.isNull(rscEntity.getId())) {
             throw new NullPointerException(""); // ?
         }
 
