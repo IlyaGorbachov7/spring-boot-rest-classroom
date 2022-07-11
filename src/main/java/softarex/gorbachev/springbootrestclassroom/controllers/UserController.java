@@ -1,52 +1,53 @@
 package softarex.gorbachev.springbootrestclassroom.controllers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import softarex.gorbachev.springbootrestclassroom.controllers.constant.UrlPath;
 import softarex.gorbachev.springbootrestclassroom.model.User;
-import softarex.gorbachev.springbootrestclassroom.service.UserService;
+import softarex.gorbachev.springbootrestclassroom.service.impl.UserService;
 
 import java.util.List;
 import java.util.UUID;
 
+import static softarex.gorbachev.springbootrestclassroom.controllers.constant.PathVariableParam.USER_ID;
+import static softarex.gorbachev.springbootrestclassroom.controllers.constant.UrlPath.USER_ID_PATH;
+
+@CrossOrigin(UrlPath.CROSS_ORIGIN)
 @RestController
-@RequestMapping("/users")
+@RequestMapping(UrlPath.USER_PATH)
+@AllArgsConstructor
 public class UserController {
 
     private final UserService service;
 
-    public UserController(UserService service) {
-        this.service = service;
+    @PostMapping
+    public User create(@RequestBody User user) {
+        return service.create(user);
     }
 
-    @CrossOrigin("http://localhost:3000")
-    @GetMapping
-    public List<User> getUsers() {
-        System.out.println(UUID.randomUUID());
-        return service.getUsers();
+    @DeleteMapping(USER_ID_PATH)
+    public void delete(@PathVariable(USER_ID) UUID uuid) {
+        service.deleteById(uuid);
     }
 
-    @CrossOrigin("http://localhost:3000")
-    @PostMapping // UserDTO - is слой between front and back => User => Mapper library
-    public User createUser(@RequestBody User user) {
-        return service.createUser(user);
+    @DeleteMapping
+    public void deleteAll() {
+        service.deleteAll();
     }
 
-    @CrossOrigin("http://localhost:3000")
-    @DeleteMapping("/{userId}")
-    public void removeUser(@PathVariable("userId") Integer /* Id  => UUID */ id) {
-        service.deleteUser(id);
-    }
-
-    @CrossOrigin("http://localhost:3000")
-    @GetMapping("/{userId}")
-    public User getUser(@PathVariable Integer userId) {
-        return service.getUser(userId);
-    }
-
-    @CrossOrigin("http://localhost:3000")
     @PutMapping
-    public void updateUser(@RequestBody User user) {
-        service.updateUser(user);
+    public void update(@RequestBody User user) {
+        service.update(user);
     }
 
+    @GetMapping(USER_ID_PATH)
+    public User get(@PathVariable(USER_ID) UUID uuid) {
+        return service.getById(uuid);
+    }
 
+    @GetMapping
+    public List<User> getAll() {
+        return service.getAll();
+    }
 }
+
