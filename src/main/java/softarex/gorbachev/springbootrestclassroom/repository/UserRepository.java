@@ -18,5 +18,5 @@ public interface UserRepository extends CrudRepository<User, UUID> {
 
     List<User> findByName(String name);
 
-    List<User> findByIdAndName(UUID id, String name);
+    List<User> findByIdOrName(UUID id, String name);
 }
