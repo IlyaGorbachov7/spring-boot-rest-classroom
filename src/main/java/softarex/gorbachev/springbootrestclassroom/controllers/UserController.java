@@ -3,7 +3,7 @@ package softarex.gorbachev.springbootrestclassroom.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import softarex.gorbachev.springbootrestclassroom.controllers.constant.UrlPath;
-import softarex.gorbachev.springbootrestclassroom.model.User;
+import softarex.gorbachev.springbootrestclassroom.model.dto.UserDTO;
 import softarex.gorbachev.springbootrestclassroom.service.impl.UserService;
 
 import java.util.List;
@@ -20,8 +20,9 @@ public class UserController {
 
     private final UserService service;
 
+
     @PostMapping
-    public User create(@RequestBody User user) {
+    public UserDTO create(@RequestBody UserDTO user) {
         return service.create(user);
     }
 
@@ -36,17 +37,17 @@ public class UserController {
     }
 
     @PutMapping
-    public void update(@RequestBody User user) {
-        service.update(user);
+    public UserDTO update(@RequestBody UserDTO user) {
+        return service.update(user);
     }
 
     @GetMapping(USER_ID_PATH)
-    public User get(@PathVariable(USER_ID) UUID uuid) {
+    public UserDTO getById(@PathVariable(USER_ID) UUID uuid) {
         return service.getById(uuid);
     }
 
     @GetMapping
-    public List<User> getAll() {
+    public List<UserDTO> getAll() {
         return service.getAll();
     }
 }
