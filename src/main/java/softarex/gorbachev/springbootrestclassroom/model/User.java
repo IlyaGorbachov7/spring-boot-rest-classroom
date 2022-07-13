@@ -8,7 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -23,11 +22,12 @@ public class User implements Serializable {
     private UUID id;
     @Indexed
     private String name;
-    private boolean isHand;
+    @Indexed
+    private boolean hand;
 
     public void update(User user) {
         name = user.name;
-        isHand = user.isHand;
+        hand = user.hand;
     }
 }
 
