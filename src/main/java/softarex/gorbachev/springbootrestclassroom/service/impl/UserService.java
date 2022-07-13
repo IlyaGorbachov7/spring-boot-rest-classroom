@@ -71,21 +71,9 @@ public class UserService implements ServiceTemplate<UserDTO, UUID> {
                                            + " or " + MessageException.ID_IS_NULL
                                            + " or " + MessageException.NAME_IS_NULL);
 
-        // if rsc is resource to update, and contains username that already exist to the other user
-        List<User> list = repository.findByName(rscEntity.getName());
-        if (!list.isEmpty() && !list.get(0).getId().equals(rscEntity.getId())) {
-            throw new UserServiceException(MessageException.USERNAME_IS_EXIST);
-        }
+        List<User> list = repository.findByIdOrName(rscEntity.getId(),rscEntity/)
 
-        Optional<User> row = repository.findById(rscEntity.getId());
-        if (!row.isPresent()) {
-            throw new UserServiceException(MessageException.USER_NO_FOUND_BY_ID);
-        }
-        User existUser = row.get();
-        mapper.update(existUser, rscEntity);
-        existUser = repository.save(existUser);
-
-        return mapper.map(existUser);
+        return /*mapper.map("existUser")*/ null;
     }
 
     @Override
