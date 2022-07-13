@@ -24,10 +24,5 @@ public class User implements Serializable {
     private String name;
     @Indexed
     private boolean hand;
-
-    public void update(User user) {
-        name = user.name;
-        hand = user.hand;
-    }
 }
 

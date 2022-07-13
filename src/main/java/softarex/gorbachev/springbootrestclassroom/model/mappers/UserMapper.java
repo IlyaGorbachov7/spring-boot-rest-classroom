@@ -7,13 +7,17 @@ import softarex.gorbachev.springbootrestclassroom.model.dto.UserDTO;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface UserMapper {
+public abstract class UserMapper {
 
-    User map(UserDTO userDTO);
+    public abstract User map(UserDTO userDTO);
 
-    UserDTO map(User user);
+    public abstract UserDTO map(User user);
 
-    List<UserDTO> mapList(List<User> list);
+    public abstract List<UserDTO> mapList(List<User> list);
 
-//    User update(UserDTO from, User to);
+    public User update(User target,UserDTO rsc) {
+        target.setName(rsc.getName());
+        target.setHand(rsc.isHand());
+        return target;
+    }
 }
