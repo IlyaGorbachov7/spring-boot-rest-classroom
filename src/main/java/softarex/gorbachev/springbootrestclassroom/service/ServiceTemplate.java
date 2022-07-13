@@ -10,7 +10,7 @@ public interface ServiceTemplate<T, ID> {
 
     T create(T entity);
 
-    void update(T rscEntity);
+    T update(T rscEntity);
 
     void deleteById(ID id);
 
