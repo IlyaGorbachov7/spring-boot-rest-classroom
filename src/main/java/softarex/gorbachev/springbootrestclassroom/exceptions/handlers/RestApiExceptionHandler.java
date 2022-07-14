@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import softarex.gorbachev.springbootrestclassroom.exceptions.UserServiceException;
 
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * THis class represent space for to handle certain
+ * This class represent space for to handle certain
  * exception within entire application
  *
  * @author Gorabachev I. D.
@@ -24,9 +25,10 @@ public class RestApiExceptionHandler {
 
     @ExceptionHandler(value = {UserServiceException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
     public Map<String, String> handleException(Exception ex) {
         Map<String, String> map = new HashMap<>();
-        map.put("error", ex.getMessage());
+        map.put("internalError", ex.getMessage());
 
         return map;
     }
@@ -42,6 +44,7 @@ public class RestApiExceptionHandler {
 
     @ExceptionHandler(value = {ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
     Map<String, String> handleConstraintViolationException(ConstraintViolationException e) {
         Map<String, String> map = new HashMap<>();
         e.getConstraintViolations().forEach(violation -> map.put(violation.getPropertyPath().toString(),

@@ -12,7 +12,12 @@ import softarex.gorbachev.springbootrestclassroom.service.ServiceTemplate;
 
 import java.util.*;
 
-
+/**
+ * This class is the main place for processing a client request.
+ *
+ * @author Gorabachev I. D.
+ * @version 14.07.2022
+ */
 @Service
 @AllArgsConstructor
 public class UserService implements ServiceTemplate<UserDTO, UUID> {
@@ -28,9 +33,6 @@ public class UserService implements ServiceTemplate<UserDTO, UUID> {
 
     @Override
     public UserDTO getById(UUID uuid) {
-        if (Objects.isNull(uuid)) {
-            throw new UserServiceException(MessageException.ID_IS_NULL);
-        }
 
         Optional<User> row = repository.findById(uuid);
         if (!row.isPresent()) {
@@ -44,31 +46,30 @@ public class UserService implements ServiceTemplate<UserDTO, UUID> {
 
     @Override
     public UserDTO create(UserDTO entity) {
-        if (Objects.isNull(entity)) {
-            throw new UserServiceException(MessageException.REQUEST_BODY_IS_NULL);
-        }
 
         if (!Objects.isNull(entity.getId()) && repository.existsById(entity.getId())) {
             throw new UserServiceException(MessageException.USER_ID_IS_EXIST);
         }
 
-        if (Objects.isNull(entity.getName()) || entity.getName().isEmpty()
-            || repository.existsByName(entity.getName())) {
+        if (repository.existsByName(entity.getName())) {
             throw new UserServiceException(MessageException.USERNAME_IS_EXIST);
         }
 
-        User user = mapper.map(entity); //  if isHand == true, then before conversation isHand == false
+        User user = mapper.map(entity);
         User saveUser = repository.save(user);
 
         return mapper.map(saveUser);
     }
 
+    /**
+     * ????
+     */
     @Override
     public UserDTO update(UserDTO rscEntity) {
-        if (Objects.isNull(rscEntity) || Objects.isNull(rscEntity.getId()))
-            throw new UserServiceException(MessageException.REQUEST_BODY_IS_NULL
-                                           + " or " + MessageException.ID_IS_NULL
-                                           + " or " + MessageException.NAME_IS_NULL);
+        // Вынести ли NOT NULL в Validator ? Используя group. Причина: id - это bad request, а не Internal exception
+        if (Objects.isNull(rscEntity.getId())) {
+            throw new UserServiceException(MessageException.USER_ID_IS_NULL);
+        }
 
         // if rsc is resource to update, and contains username that already exist to the other user
         List<User> list = repository.findByName(rscEntity.getName());
@@ -89,10 +90,6 @@ public class UserService implements ServiceTemplate<UserDTO, UUID> {
 
     @Override
     public void deleteById(UUID uuid) {
-        if (Objects.isNull(uuid)) {
-            throw new UserServiceException(MessageException.ID_IS_NULL);
-        }
-
         repository.deleteById(uuid);
     }
 
