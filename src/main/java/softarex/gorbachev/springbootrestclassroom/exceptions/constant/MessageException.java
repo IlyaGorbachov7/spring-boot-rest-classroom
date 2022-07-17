@@ -14,5 +14,4 @@ public interface MessageException {
     String USER_ID_IS_EXIST = "user id is exist";
 
     String USERNAME_IS_EXIST = "username is exist";
-
 }
