@@ -15,7 +15,7 @@ public interface UserDTOValidation {
     int MAX_LENGTH_NAME = 30;
 
     String REGEX = "(^([A-ZА-ЯЁ][a-zа-яё]{" + (MIN_LENGTH_NAME - 1) + ",})((\\s([A-ZА-ЯЁ][a-zа-яё]{" +
-                   (MIN_LENGTH_NAME - 1) + ",}))?)$)";
+                   (MIN_LENGTH_NAME - 1) + ",}))?)$)|";
 
     String MSG_USER_ID_IS_NULL = "Must specify the ID";
 
