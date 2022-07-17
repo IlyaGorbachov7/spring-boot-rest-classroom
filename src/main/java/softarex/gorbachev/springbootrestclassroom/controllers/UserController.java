@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static softarex.gorbachev.springbootrestclassroom.controllers.constants.PathVariableParam.USER_ID;
-import static softarex.gorbachev.springbootrestclassroom.controllers.constants.UrlPath.USER_ID_PATH;
+import static softarex.gorbachev.springbootrestclassroom.controllers.constants.UrlPath.*;
 import static softarex.gorbachev.springbootrestclassroom.model.dto.constants.UserDTOValidation.MSG_USER_ID_IS_NULL;
 
 /**
@@ -22,15 +22,14 @@ import static softarex.gorbachev.springbootrestclassroom.model.dto.constants.Use
  * @author Gorbachev I. D.
  * @version 13.07.2022
  */
-@CrossOrigin(UrlPath.CROSS_ORIGIN)
+@CrossOrigin(CROSS_ORIGIN)
 @RestController
-@RequestMapping(UrlPath.USER_PATH)
+@RequestMapping(USER_PATH)
 @Validated
 @AllArgsConstructor
 public class UserController {
 
     private final UserService service;
-
 
     @PostMapping
     public UserDTO create(@RequestBody @Valid UserDTO user) {
