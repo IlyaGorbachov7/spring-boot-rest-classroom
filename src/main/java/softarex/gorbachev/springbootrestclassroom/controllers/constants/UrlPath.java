@@ -8,15 +8,13 @@ package softarex.gorbachev.springbootrestclassroom.controllers.constants;
  */
 public interface UrlPath {
     String CROSS_ORIGIN = "http://localhost:3000";
-    String WS_CROSS_ORIGIN = "ws://localhost:3000";
     String USER_PATH = "/users";
     String USER_ID_PATH = "/{userId}";
 
     String END_POINT = "/ws";
     String[] APPLICATION_DES_PREFIXES = {"/app"};
     String[] BROKER_DES_PREFIXES = {"/topic"};
+    String USER_DES_PREFIX = "/user";
 
     String DES_TOPIC_CLASSROOM = "/topic/classroom";
-
-    String DES_TOPIC_CLASSROOM_USER = "/topic/classroom/user";
 }

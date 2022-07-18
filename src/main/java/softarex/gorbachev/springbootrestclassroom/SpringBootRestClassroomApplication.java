@@ -54,5 +54,6 @@ public class SpringBootRestClassroomApplication implements WebSocketMessageBroke
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes(APPLICATION_DES_PREFIXES);
         registry.enableSimpleBroker(BROKER_DES_PREFIXES);
+        registry.setUserDestinationPrefix(USER_DES_PREFIX);
     }
 }
