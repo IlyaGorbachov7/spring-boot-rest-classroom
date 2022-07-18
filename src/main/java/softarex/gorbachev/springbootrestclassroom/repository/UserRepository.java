@@ -17,12 +17,34 @@ import java.util.UUID;
  */
 @Repository
 public interface UserRepository extends CrudRepository<User, UUID> {
-
+    /**
+     * Generates list all users from database
+     *
+     * @return list users
+     */
     List<User> findAll();
 
+    /**
+     * Checking an existing user by ID in the database
+     *
+     * @param uuid unique user ID
+     * @return {@code true}, if exist otherwise  {@code false}
+     */
     boolean existsById(UUID uuid);
 
+    /**
+     * Checking an existing user by username in the database
+     *
+     * @param name username
+     * @return {@code true}, if exist otherwise  {@code false}
+     */
     boolean existsByName(String name);
 
+    /**
+     * Returns a list of users who have the specified username from the database
+     *
+     * @param name username
+     * @return list users
+     */
     List<User> findByName(String name);
 }

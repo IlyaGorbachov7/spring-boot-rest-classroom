@@ -1,6 +1,7 @@
 package softarex.gorbachev.springbootrestclassroom.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import softarex.gorbachev.springbootrestclassroom.exceptions.UserServiceException;
 import softarex.gorbachev.springbootrestclassroom.exceptions.constant.MessageException;

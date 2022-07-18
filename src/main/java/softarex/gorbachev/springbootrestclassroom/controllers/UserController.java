@@ -3,7 +3,6 @@ package softarex.gorbachev.springbootrestclassroom.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import softarex.gorbachev.springbootrestclassroom.controllers.constants.UrlPath;
 import softarex.gorbachev.springbootrestclassroom.model.dto.UserDTO;
 import softarex.gorbachev.springbootrestclassroom.service.impl.UserService;
 

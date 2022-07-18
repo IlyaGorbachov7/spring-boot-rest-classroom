@@ -10,7 +10,6 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import softarex.gorbachev.springbootrestclassroom.controllers.constants.UrlPath;
 
 import static softarex.gorbachev.springbootrestclassroom.controllers.constants.UrlPath.*;
 
