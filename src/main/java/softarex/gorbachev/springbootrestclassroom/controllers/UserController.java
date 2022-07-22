@@ -1,9 +1,15 @@
 package softarex.gorbachev.springbootrestclassroom.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import softarex.gorbachev.springbootrestclassroom.model.dto.UserDTO;
+import softarex.gorbachev.springbootrestclassroom.model.dto.constants.OnCreate;
+import softarex.gorbachev.springbootrestclassroom.model.dto.constants.OnUpdate;
 import softarex.gorbachev.springbootrestclassroom.service.impl.UserService;
 
 import javax.validation.Valid;
@@ -30,7 +36,10 @@ public class UserController {
 
     private final UserService service;
 
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
     @PostMapping
+    @Validated(value = {OnCreate.class})
     public UserDTO create(@RequestBody @Valid UserDTO user) {
         return service.create(user);
     }
@@ -47,6 +56,7 @@ public class UserController {
     }
 
     @PutMapping
+    @Validated(value = {OnUpdate.class})
     public UserDTO update(@RequestBody @Valid UserDTO user) {
         return service.update(user);
     }
@@ -60,6 +70,19 @@ public class UserController {
     @GetMapping
     public List<UserDTO> getAll() {
         return service.getAll();
+    }
+
+    /**
+     * url-path @RESTController-a : {@code /users} - not taken into account
+     * <p>
+     * {@code PRIVATE_DELETE_PATH} - the path is added to this path : <b>/app</b>
+     * certain from {@link softarex.gorbachev.springbootrestclassroom.SpringBootRestClassroomApplication#configureMessageBroker(MessageBrokerRegistry)}
+     * <p>
+     * // url in front-end : /app/private/delete
+     */
+    @MessageMapping(PRIVATE_DELETE_PATH)
+    public void sendDeleteById(@Payload UUID uuid) {
+        simpMessagingTemplate.convertAndSendToUser(uuid.toString(), DES_DELETE, uuid);
     }
 }
 

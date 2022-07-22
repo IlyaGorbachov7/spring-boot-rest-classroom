@@ -17,7 +17,9 @@ public interface UserDTOValidation {
     String REGEX = "(^([A-ZА-ЯЁ][a-zа-яё]{" + (MIN_LENGTH_NAME - 1) + ",})((\\s([A-ZА-ЯЁ][a-zа-яё]{" +
                    (MIN_LENGTH_NAME - 1) + ",}))?)$)|";
 
-    String MSG_USER_ID_IS_NULL = "Must specify the ID";
+    String MSG_USER_ID_IS_NULL = "The ID must be require specified";
+
+    String MSG_USER_ID_NOT_NULL = "The ID must not be specified";
 
     String MSG_USER_NAME_REGEX = "Username for example: " +
                                  "Firstname (or: Firstname Lastname) " +
