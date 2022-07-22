@@ -2,10 +2,14 @@ package softarex.gorbachev.springbootrestclassroom.model.dto;
 
 import lombok.*;
 import softarex.gorbachev.springbootrestclassroom.model.User;
+import softarex.gorbachev.springbootrestclassroom.model.dto.constants.OnCreate;
+import softarex.gorbachev.springbootrestclassroom.model.dto.constants.OnUpdate;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 import java.util.UUID;
 
 import static softarex.gorbachev.springbootrestclassroom.model.dto.constants.UserDTOValidation.*;
@@ -21,6 +25,8 @@ import static softarex.gorbachev.springbootrestclassroom.model.dto.constants.Use
 @NoArgsConstructor
 public class UserDTO {
 
+    @Null(groups = OnCreate.class, message = MSG_USER_ID_NOT_NULL)
+    @NotNull(groups = OnUpdate.class, message = MSG_USER_ID_IS_NULL)
     private UUID id;
 
     @Pattern(regexp = REGEX, message = MSG_USER_NAME_REGEX)
