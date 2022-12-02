@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 import java.util.UUID;
 
 import static softarex.gorbachev.springbootrestclassroom.model.dto.constants.UserDTOValidation.*;
@@ -27,7 +26,7 @@ public class UserDTO {
 
     @Null(groups = OnCreate.class, message = MSG_USER_ID_NOT_NULL)
     @NotNull(groups = OnUpdate.class, message = MSG_USER_ID_IS_NULL)
-    private UUID id;
+    private Integer id;
 
     @Pattern(regexp = REGEX, message = MSG_USER_NAME_REGEX)
     @Size(min = MIN_LENGTH_NAME, max = MAX_LENGTH_NAME, message = MSG_USER_NAME_SIZE)

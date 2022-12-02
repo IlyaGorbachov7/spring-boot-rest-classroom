@@ -1,9 +1,7 @@
 package softarex.gorbachev.springbootrestclassroom.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import softarex.gorbachev.springbootrestclassroom.controllers.constants.UrlPath;
 import softarex.gorbachev.springbootrestclassroom.exceptions.UserServiceException;
 import softarex.gorbachev.springbootrestclassroom.exceptions.constant.MessageException;
 import softarex.gorbachev.springbootrestclassroom.model.User;
@@ -22,11 +20,9 @@ import java.util.*;
  */
 @Service
 @AllArgsConstructor
-public class UserService implements ServiceTemplate<UserDTO, UUID> {
+public class UserService implements ServiceTemplate<UserDTO, Integer> {
 
     private final UserRepository repository;
-
-    private final SimpMessagingTemplate simpMessagingTemplate;
 
     private final UserMapper mapper;
 
@@ -36,7 +32,7 @@ public class UserService implements ServiceTemplate<UserDTO, UUID> {
     }
 
     @Override
-    public UserDTO getById(UUID uuid) {
+    public UserDTO getById(Integer uuid) {
 
         Optional<User> row = repository.findById(uuid);
         if (!row.isPresent()) {
@@ -58,7 +54,6 @@ public class UserService implements ServiceTemplate<UserDTO, UUID> {
         User user = mapper.map(entity);
         User saveUser = repository.save(user);
 
-        simpMessagingTemplate.convertAndSend(UrlPath.DES_TOPIC_CLASSROOM + "/create", saveUser);
         return mapper.map(saveUser);
     }
 
@@ -78,16 +73,12 @@ public class UserService implements ServiceTemplate<UserDTO, UUID> {
         User existUser = row.get();
         mapper.update(existUser, rscEntity);
         existUser = repository.save(existUser);
-
-        simpMessagingTemplate.convertAndSend(UrlPath.DES_TOPIC_CLASSROOM + "/update", existUser);
         return mapper.map(existUser);
     }
 
     @Override
-    public void deleteById(UUID uuid) {
+    public void deleteById(Integer uuid) {
         repository.deleteById(uuid);
-
-        simpMessagingTemplate.convertAndSend(UrlPath.DES_TOPIC_CLASSROOM + "/delete", uuid);
     }
 
     @Override

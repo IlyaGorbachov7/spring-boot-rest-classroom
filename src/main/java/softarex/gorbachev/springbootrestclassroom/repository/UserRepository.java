@@ -16,7 +16,7 @@ import java.util.UUID;
  * @version 14.07.2022
  */
 @Repository
-public interface UserRepository extends CrudRepository<User, UUID> {
+public interface UserRepository extends CrudRepository<User, Integer> {
     /**
      * Generates list all users from database
      *

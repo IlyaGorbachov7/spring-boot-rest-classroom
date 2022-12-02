@@ -1,10 +1,6 @@
 package softarex.gorbachev.springbootrestclassroom.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import softarex.gorbachev.springbootrestclassroom.model.dto.UserDTO;
@@ -15,7 +11,6 @@ import softarex.gorbachev.springbootrestclassroom.service.impl.UserService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 import static softarex.gorbachev.springbootrestclassroom.controllers.constants.PathVariableParam.USER_ID;
 import static softarex.gorbachev.springbootrestclassroom.controllers.constants.UrlPath.*;
@@ -36,8 +31,6 @@ public class UserController {
 
     private final UserService service;
 
-    private final SimpMessagingTemplate simpMessagingTemplate;
-
     @PostMapping
     @Validated(value = {OnCreate.class})
     public UserDTO create(@RequestBody @Valid UserDTO user) {
@@ -46,7 +39,7 @@ public class UserController {
 
     @DeleteMapping(USER_ID_PATH)
     public void delete(@PathVariable(USER_ID)
-                       @NotNull(message = MSG_USER_ID_IS_NULL) UUID uuid) {
+                       @NotNull(message = MSG_USER_ID_IS_NULL) Integer uuid) {
         service.deleteById(uuid);
     }
 
@@ -63,26 +56,13 @@ public class UserController {
 
     @GetMapping(USER_ID_PATH)
     public UserDTO getById(@PathVariable(USER_ID)
-                           @NotNull(message = MSG_USER_ID_IS_NULL) UUID uuid) {
+                           @NotNull(message = MSG_USER_ID_IS_NULL) Integer uuid) {
         return service.getById(uuid);
     }
 
     @GetMapping
     public List<UserDTO> getAll() {
         return service.getAll();
-    }
-
-    /**
-     * url-path @RESTController-a : {@code /users} - not taken into account
-     * <p>
-     * {@code PRIVATE_DELETE_PATH} - the path is added to this path : <b>/app</b>
-     * certain from {@link softarex.gorbachev.springbootrestclassroom.SpringBootRestClassroomApplication#configureMessageBroker(MessageBrokerRegistry)}
-     * <p>
-     * // url in front-end : /app/private/delete
-     */
-    @MessageMapping(PRIVATE_DELETE_PATH)
-    public void sendDeleteById(@Payload UUID uuid) {
-        simpMessagingTemplate.convertAndSendToUser(uuid.toString(), DES_DELETE, uuid);
     }
 }
 
