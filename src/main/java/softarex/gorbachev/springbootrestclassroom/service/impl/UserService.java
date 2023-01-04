@@ -94,5 +94,4 @@ public class UserService implements ServiceTemplate<UserDTO, UUID> {
     public void deleteAll() {
         repository.deleteAll();
     }
-
 }
